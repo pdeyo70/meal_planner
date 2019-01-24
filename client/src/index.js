@@ -10,11 +10,14 @@ import { logger } from "redux-logger";
 import ReduxThunk from "redux-thunk";
 import allReducers from "./reducers";
 import setAuthorizationToken from "./utils/setAuthorizationToken";
+import jwt from "jsonwebtoken";
+import { setCurrentUser } from "./actions/authActions";
 
 const store = createStore(allReducers, applyMiddleware(ReduxThunk, logger));
 
 if (localStorage.getItem("meal_planner_token")) {
   setAuthorizationToken(localStorage.meal_planner_token);
+  store.dispatch(setCurrentUser(jwt.decode(localStorage.meal_planner_token)));
 }
 
 ReactDOM.render(
