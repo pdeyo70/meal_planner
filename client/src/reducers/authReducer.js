@@ -24,8 +24,7 @@ export const authReducer = (state = initialState, action) => {
     case LOGOUT:
       return Object.assign({}, state, {
         logged_in: false,
-        current_user: [],
-        message: "Logged Out Successfully"
+        current_user: []
       });
     case SET_CURR_USER:
       return Object.assign({}, state, {
@@ -48,7 +47,6 @@ export const authReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         logged_in: true,
         logging_in: false,
-        current_user_id: action.payload.id,
         message: "Logged in successful."
       });
     case LOGGING_IN:

@@ -9,7 +9,7 @@ import {
   Alert
 } from "reactstrap";
 import "./LoginForm.css";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 
@@ -75,7 +75,7 @@ class LoginForm extends React.Component {
           <Link to="/login/reset">Forgot Password?</Link>
         </FormText>
         {this.props.logged_in ? (
-          <Redirect to={`/dashboard/${this.props.current_user_id}`} />
+          <Redirect to={`/dashboard/${this.props.current_user.id}`} />
         ) : null}
       </Form>
     );
@@ -88,11 +88,13 @@ const mapStateToProps = state => {
     logged_in: state.authReducer.logged_in,
     error: state.authReducer.error,
     message: state.authReducer.message,
-    current_user_id: state.authReducer.current_user_id
+    current_user: state.authReducer.current_user
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { loginUser }
-)(LoginForm);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { loginUser }
+  )(LoginForm)
+);
