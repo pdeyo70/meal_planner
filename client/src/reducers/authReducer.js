@@ -4,7 +4,8 @@ import {
   LOGGING_IN,
   REGISTERING,
   REGISTERED,
-  SET_CURR_USER
+  SET_CURR_USER,
+  LOGOUT
 } from "../actions/authActions";
 
 const initialState = {
@@ -20,6 +21,12 @@ const initialState = {
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
+    case LOGOUT:
+      return Object.assign({}, state, {
+        logged_in: false,
+        current_user: [],
+        message: "Logged Out Successfully"
+      });
     case SET_CURR_USER:
       return Object.assign({}, state, {
         logged_in: true,

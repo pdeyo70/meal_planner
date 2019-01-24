@@ -12,6 +12,7 @@ import {
   DropdownItem
 } from "reactstrap";
 import { connect } from "react-redux";
+import { logout } from "../../actions/authActions";
 
 class Header extends React.Component {
   constructor(props) {
@@ -27,6 +28,10 @@ class Header extends React.Component {
       isOpen: !this.state.isOpen
     });
   }
+  logout = () => {
+    localStorage.removeItem("meal_planner_token");
+    return this.props.logout();
+  };
   render() {
     return (
       <div>
@@ -54,7 +59,7 @@ class Header extends React.Component {
                 </NavItem>
               ) : (
                 <NavItem>
-                  <Link className="nav-link" to="/logout/">
+                  <Link className="nav-link" to="/" onClick={this.logout}>
                     Logout
                   </Link>
                 </NavItem>
@@ -82,5 +87,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  {}
+  { logout }
 )(Header);

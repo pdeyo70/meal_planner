@@ -8,6 +8,7 @@ export const LOGGING_IN = "LOGGING_IN";
 export const REGISTERED = "REGISTERED";
 export const REGISTERING = "REGISTERING";
 export const SET_CURR_USER = "SET_CURR_USER";
+export const LOGOUT = "LOGOUT";
 
 const token = localStorage.getItem("meal_planner_token");
 const options = {
@@ -51,5 +52,11 @@ export const loginUser = user => {
         dispatch({ type: LOGGED_IN, payload: res.data });
       })
       .catch(err => dispatch({ type: ERROR, payload: err }));
+  };
+};
+
+export const logout = () => {
+  return dispatch => {
+    dispatch({ type: LOGOUT });
   };
 };
