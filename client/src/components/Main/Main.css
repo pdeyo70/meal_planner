@@ -1,0 +1,8 @@
+.main-container {
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 5px 5px 5px 5px;
+  margin: 20px auto 0;
+  max-width: 1000px;
+  width: 90%;
+}
