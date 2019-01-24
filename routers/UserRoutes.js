@@ -55,7 +55,7 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  const { password, username } = req.body;
+  const { password, username } = req.body.user;
   User.login(username)
     .then(user => {
       if (user) {
@@ -64,7 +64,7 @@ router.post("/login", (req, res) => {
         bcrypt.compare(password, pass, (err, result) => {
           if (result) {
             const token = generateToken(user.id);
-            res.json({ token });
+            res.json({ id: user.id, token });
           } else {
             res.status(401).send("You shall not pass!");
           }
