@@ -1,0 +1,30 @@
+.dashboard-nav-container {
+  background-color: lightgray;
+  display: flex;
+  font-size: 20px;
+  justify-content: space-between;
+  padding: 5px 10px;
+  margin: 20px auto;
+}
+
+.dash-nav {
+  display: flex;
+  width: 49%;
+}
+
+.dash-back {
+  display: flex;
+}
+
+.dashboard-nav-container a {
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background-color: orange;
+  padding: 3px;
+  margin: 3px;
+}
+
+.dashboard-nav-container section .active-dash {
+  background-color: darkblue;
+  box-shadow: 0 0 3px 3px orange;
+}

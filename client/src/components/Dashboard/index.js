@@ -1,10 +1,11 @@
 import React from "react";
-import { NavLink, Link, Redirect, withRouter, Route } from "react-router-dom";
+import { Redirect, withRouter, Route } from "react-router-dom";
 import { connect } from "react-redux";
 
 // all components go here
+import DashboardNav from "../DashboardNav";
 import DashArticle from "../DashArticle";
-import RecipesContainer from "../RecipesContainer";
+import CreateRecipe from "../CreateRecipe";
 import MealPlanner from "../MealPlanner";
 import ShoppingList from "../ShoppingList";
 
@@ -14,30 +15,13 @@ class Dashboard extends React.Component {
       <section>
         <h1>Dashboard</h1>
         {this.props.logged_in ? null : <Redirect to="/login" />}
-        <section>
-          <NavLink
-            to={`/dashboard/${this.props.current_user.id}/recipes/create`}
-          >
-            Recipes
-          </NavLink>
-          <NavLink to={`/dashboard/${this.props.current_user.id}/planner`}>
-            Planner
-          </NavLink>
-          <NavLink
-            to={`/dashboard/${this.props.current_user.id}/shopping_list`}
-          >
-            Shopping List
-          </NavLink>
-          <Link to={`/dashboard/${this.props.current_user.id}/`}>
-            Back to Dashboard Main
-          </Link>
-        </section>
+        <DashboardNav />
         <DashArticle />
         <section>
           <Route
             path={`/dashboard/${this.props.current_user.id}/recipes/create`}
             exact
-            render={() => <RecipesContainer />}
+            render={() => <CreateRecipe />}
           />
           <Route
             path={`/dashboard/${this.props.current_user.id}/planner`}
