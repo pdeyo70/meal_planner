@@ -70,7 +70,16 @@ class Header extends React.Component {
                     Register
                   </Link>
                 </NavItem>
-              ) : null}
+              ) : (
+                <NavItem>
+                  <Link
+                    className="nav-link"
+                    to={`/dashboard/${this.props.current_user.id}`}
+                  >
+                    Dashboard
+                  </Link>
+                </NavItem>
+              )}
             </Nav>
           </Collapse>
         </Navbar>
@@ -81,7 +90,8 @@ class Header extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    logged_in: state.authReducer.logged_in
+    logged_in: state.authReducer.logged_in,
+    current_user: state.authReducer.current_user
   };
 };
 
