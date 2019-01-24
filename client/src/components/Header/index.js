@@ -11,6 +11,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
+import { connect } from "react-redux";
 
 class Header extends React.Component {
   constructor(props) {
@@ -45,16 +46,26 @@ class Header extends React.Component {
                   <DropdownItem>Reset</DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-              <NavItem>
-                <Link className="nav-link" to="/login/">
-                  Login
-                </Link>
-              </NavItem>
-              <NavItem>
-                <Link className="nav-link" to="/register/">
-                  Register
-                </Link>
-              </NavItem>
+              {!this.props.logged_in ? (
+                <NavItem>
+                  <Link className="nav-link" to="/login/">
+                    Login
+                  </Link>
+                </NavItem>
+              ) : (
+                <NavItem>
+                  <Link className="nav-link" to="/logout/">
+                    Logout
+                  </Link>
+                </NavItem>
+              )}
+              {!this.props.logged_in ? (
+                <NavItem>
+                  <Link className="nav-link" to="/register/">
+                    Register
+                  </Link>
+                </NavItem>
+              ) : null}
             </Nav>
           </Collapse>
         </Navbar>
@@ -63,4 +74,13 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+const mapStateToProps = state => {
+  return {
+    logged_in: state.authReducer.logged_in
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {}
+)(Header);
