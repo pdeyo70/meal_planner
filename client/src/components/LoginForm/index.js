@@ -23,7 +23,7 @@ export default class LoginForm extends React.Component {
     };
     // check if username is present and verify password
     if (this.state.username.length && this.state.password.length) {
-      alert("it works");
+      return console.log(user);
     } else {
       alert("Please check credentials and try again");
     }

@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
+import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 
 class RegisterForm extends React.Component {
   constructor() {
@@ -29,6 +28,7 @@ class RegisterForm extends React.Component {
     // check if username is present and verify password
     if (this.state.username.length && this.verifyPassword()) {
       alert("it works");
+      return console.log(user);
     } else {
       alert("Please check credentials and try again");
     }
