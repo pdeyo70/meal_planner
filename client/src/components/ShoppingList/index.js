@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 class ShoppingList extends React.Component {
   render() {

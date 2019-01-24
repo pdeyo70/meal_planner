@@ -6,10 +6,7 @@ import {
   NavbarToggler,
   Nav,
   NavItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
+  Input
 } from "reactstrap";
 import { connect } from "react-redux";
 import { logout } from "../../actions/authActions";
@@ -18,39 +15,53 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
 
-    this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      search: ""
     };
   }
-  toggle() {
+  toggle = () => {
     this.setState({
       isOpen: !this.state.isOpen
     });
-  }
+  };
   logout = () => {
     localStorage.removeItem("meal_planner_token");
     return this.props.logout();
+  };
+  changeHandler = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+  keyDown = e => {
+    if (e.keyCode === 13) {
+      this.searchRecipes(this.state.search);
+    } else {
+      return;
+    }
+  };
+  searchRecipes = search => {
+    alert(search);
   };
   render() {
     return (
       <div>
         <Navbar color="dark" dark expand="md">
-          <Link to="/">reactstrap</Link>
+          <Link to="/">Meal Planner</Link>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Docs
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>Option 1</DropdownItem>
-                  <DropdownItem>Option 2</DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>Reset</DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              <NavItem>
+                {/*finish adding search functionality once recipes seeded*/}
+                <Input
+                  type="text"
+                  placeholder="search"
+                  name="search"
+                  onChange={this.changeHandler}
+                  value={this.state.search}
+                  onKeyDown={this.keyDown}
+                  onSubmit={this.searchRecipes}
+                />
+              </NavItem>
               {!this.props.logged_in ? (
                 <NavItem>
                   <Link className="nav-link" to="/login/">
