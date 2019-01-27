@@ -28,21 +28,18 @@ class LoginForm extends React.Component {
   createLoginObject = e => {
     e.preventDefault();
     const user = {
-      username: this.state.username,
+      username: this.state.username.toLowerCase(),
       password: this.state.password
     };
-    // check if username is present and verify password
-    if (this.state.username.length && this.state.password.length) {
-      return this.props.loginUser(user);
-    } else {
-      alert("Please check credentials and try again");
-    }
+    return this.props.loginUser(user);
   };
   render() {
     return (
       <Form className="login-form" onSubmit={this.createLoginObject}>
         {this.props.message ? (
           <Alert color="primary">{this.props.message}</Alert>
+        ) : this.props.error ? (
+          <Alert color="danger">{this.props.error}</Alert>
         ) : (
           <Alert color="secondary">Please Enter your credentials below</Alert>
         )}

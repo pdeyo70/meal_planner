@@ -16,7 +16,9 @@ const initialState = {
   current_user_id: "",
   error: null,
   message: "",
-  current_user: []
+  current_user: [],
+  registerError: null,
+  registerMessage: ""
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -24,6 +26,7 @@ export const authReducer = (state = initialState, action) => {
     case LOGOUT:
       return Object.assign({}, state, {
         logged_in: false,
+        message: "",
         current_user: []
       });
     case SET_CURR_USER:
@@ -35,13 +38,15 @@ export const authReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         registering: true,
         registered: false,
-        message: action.payload
+        registerMessage: action.payload
       });
     case REGISTERED:
       return Object.assign({}, state, {
         registering: false,
         registered: true,
-        message: ""
+        registerMessage:
+          "Congratulations, you are now ready to sign in to the kitchen!",
+        registerError: ""
       });
     case LOGGED_IN:
       return Object.assign({}, state, {
@@ -56,7 +61,12 @@ export const authReducer = (state = initialState, action) => {
         message: action.payload
       });
     case ERROR:
-      return Object.assign({}, state, { error: action.payload });
+      return Object.assign({}, state, {
+        error: action.payload,
+        logging_in: false,
+        registering: false,
+        message: ""
+      });
     default:
       return state;
   }

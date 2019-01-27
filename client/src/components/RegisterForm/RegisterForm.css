@@ -1,0 +1,20 @@
+.register-form {
+  margin: 30px auto;
+  width: 600px;
+}
+.name-span {
+  display: flex;
+  justify-content: space-between;
+}
+.name {
+  width: 48%;
+}
+
+.pass-span {
+  display: flex;
+  justify-content: space-between;
+}
+
+.pass-span .form-group {
+  width: 48%;
+}

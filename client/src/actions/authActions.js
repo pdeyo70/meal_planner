@@ -25,33 +25,48 @@ export const setCurrentUser = user => {
 };
 
 // HTTP request for REGISTER
-export const registerUser = user => {
+export const registerUser = obj => {
+  const { password, password2, firstName, lastName, username, email } = obj;
+  const user = { username, firstName, lastName, email, password };
   return dispatch => {
     dispatch({ type: REGISTERING, payload: "Registering User..." });
-
-    axios
-      .post("http://localhost:3030/api/register", { ...user })
-      .then(res => {
-        dispatch({ type: REGISTERED, payload: res.data });
-      })
-      .catch(err => dispatch({ type: ERROR, payload: err }));
+    // verify passwords are the same
+    if (password === password2) {
+      axios
+        .post("http://localhost:3030/api/auth/register", { user })
+        .then(res => {
+          dispatch({ type: REGISTERED, payload: res.data });
+        })
+        .catch(err =>
+          dispatch({ type: ERROR, payload: "Please check the form for errors" })
+        );
+    } else {
+      dispatch({ type: ERROR, payload: "Passwords do not match" });
+    }
   };
 };
 
 export const loginUser = user => {
+  const { username, password } = user;
   return dispatch => {
     dispatch({ type: LOGGING_IN, payload: "Logging In..." });
 
-    axios
-      .post("http://localhost:3030/api/auth/login", { user })
-      .then(res => {
-        const token = res.data.token;
-        localStorage.setItem("meal_planner_token", token);
-        setAuthorizationToken(token);
-        dispatch(setCurrentUser(jwt.decode(token)));
-        dispatch({ type: LOGGED_IN, payload: res.data });
-      })
-      .catch(err => dispatch({ type: ERROR, payload: err }));
+    if (username && password.length > 7) {
+      axios
+        .post("http://localhost:3030/api/auth/login", { user })
+        .then(res => {
+          const token = res.data.token;
+          localStorage.setItem("meal_planner_token", token);
+          setAuthorizationToken(token);
+          dispatch(setCurrentUser(jwt.decode(token)));
+          dispatch({ type: LOGGED_IN, payload: res.data });
+        })
+        .catch(err =>
+          dispatch({ type: ERROR, payload: "username/password incorrect" })
+        );
+    } else {
+      dispatch({ type: ERROR, payload: "username/password format incorrect." });
+    }
   };
 };
 

@@ -7,7 +7,7 @@ module.exports = {
   getUser: id => {
     return DB("user")
       .where("id", id)
-      .select("id", "username", "department");
+      .select("id", "username", "firstName", "lastName", "email");
   },
   getUsers: () => {
     return DB("user");
