@@ -55,7 +55,9 @@ export const recipeReducer = (state = initialState, action) => {
     case INIT_RECIPE:
       return Object.assign({}, state, {
         initRecipe: true,
-        create_overview: true
+        create_overview: true,
+        create_ingredients: false,
+        create_directions: false
       });
     case ERROR:
       return Object.assign({}, state, {

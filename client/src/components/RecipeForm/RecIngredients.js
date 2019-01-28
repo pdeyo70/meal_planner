@@ -1,7 +1,9 @@
 import React from "react";
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 import { connect } from "react-redux";
-import { createRecipe } from "../../actions/recipeActions";
+import { initRecipe, createRecipe } from "../../actions/recipeActions";
+
+import RecIngredientList from "./RecIngredientList";
 
 class RecIngredients extends React.Component {
   constructor(props) {
@@ -15,13 +17,22 @@ class RecIngredients extends React.Component {
       amoutType: ""
     };
   }
+  componenetDidMount() {
+    return this.setState({
+      ingredientList: this.props.curr_recipe.ingredients
+    });
+  }
   changeHandler = e => {
     return this.setState({ [e.target.name]: e.target.value });
   };
   addIngredient = e => {
     e.preventDefault();
     let ingredientList = this.state.ingredientList;
-    let ingredient = { amount: this.state.amount, name: this.state.name };
+    let ingredient = {
+      amount: this.state.amount,
+      name: this.state.name,
+      amountType: this.state.amountType
+    };
     ingredientList.push(ingredient);
     this.setState({ ingredientList, amount: "", name: "", amountType: "" });
   };
@@ -31,6 +42,18 @@ class RecIngredients extends React.Component {
     console.log(ingredients);
     const recipe = Object.assign({}, this.props.curr_recipe, { ingredients });
     return this.props.createRecipe(recipe, "CREATE_INGREDIENTS");
+  };
+  goBackToOverview = () => {
+    if (this.state.ingredientList) {
+      return this.props.initRecipe();
+    }
+  };
+  delete = index => {
+    let ingredients = this.state.ingredientList;
+    ingredients.splice(index, 1);
+    return this.setState({
+      ingredientList: ingredients
+    });
   };
   render() {
     return (
@@ -85,17 +108,11 @@ class RecIngredients extends React.Component {
         <Button onClick={this.createIngredientsObject}>
           Submit Ingredients
         </Button>
-        {this.state.ingredientList
-          ? this.state.ingredientList.map(ing => {
-              const { amount, amountType, name } = ing;
-              return (
-                <p>
-                  {amount}
-                  {amountType}, {name}
-                </p>
-              );
-            })
-          : null}
+        <Button onClick={this.goBackToOverview}>Back to Overview</Button>
+        <RecIngredientList
+          ingredientList={this.state.ingredientList}
+          delete={this.delete}
+        />
       </section>
     );
   }
@@ -109,5 +126,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { createRecipe }
+  { createRecipe, initRecipe }
 )(RecIngredients);

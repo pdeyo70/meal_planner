@@ -119,14 +119,16 @@ class RecOverview extends React.Component {
           Once you submit the recipe overview you will be able to add
           ingredients and cooking directions.
         </FormText>
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Submit Overview</Button>
       </Form>
     );
   }
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    curr_recipe: state.recipeReducer.curr_recipe
+  };
 };
 
 export default connect(
